@@ -1,2 +1,12 @@
-# short-film-studio
-Landing page and production toolkit for a short film project
+# Logs
+npm-debug.log*
+
+# Dependency directories
+node_modules/
+
+# Build output
+/dist/
+
+# Editor files
+.vscode/
+.DS_Store
