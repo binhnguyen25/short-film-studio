@@ -13,28 +13,28 @@ import {
   festivals,
 } from './data.js'
 
-const GENRES = ['All', ...new Set(films.map((f) => f.genre.split(' / ')[0]))]
+const GENRES = ['Tất cả', ...new Set(films.map((f) => f.genre.split(' / ')[0]))]
 
 function StatusBadge({ status, tone }) {
   return <span className={`badge tone-${tone || 'amber'}`}>{status}</span>
 }
 
 function FilmsSection() {
-  const [genre, setGenre] = useState('All')
+  const [genre, setGenre] = useState('Tất cả')
   const shown = useMemo(
-    () => (genre === 'All' ? films : films.filter((f) => f.genre.startsWith(genre))),
+    () => (genre === 'Tất cả' ? films : films.filter((f) => f.genre.startsWith(genre))),
     [genre],
   )
   return (
     <section id="films" className="panel">
       <div className="section-heading">
-        <p className="eyebrow">Films</p>
-        <h2>Our short films.</h2>
+        <p className="eyebrow">Phim</p>
+        <h2>Các phim ngắn của chúng tôi.</h2>
         <p className="section-sub">
-          Every project, from first draft to festival screen. Filter by genre to find a film.
+          Mọi dự án, từ bản nháp đầu tiên đến màn hình liên hoan. Lọc theo thể loại để tìm phim.
         </p>
       </div>
-      <div className="filter-row" role="group" aria-label="Filter films by genre">
+      <div className="filter-row" role="group" aria-label="Lọc phim theo thể loại">
         {GENRES.map((g) => (
           <button
             key={g}
@@ -57,7 +57,7 @@ function FilmsSection() {
             <h3>{film.title}</h3>
             <p className="film-genre">{film.genre}</p>
             <p>{film.logline}</p>
-            <p className="film-director">Directed by {film.director}</p>
+            <p className="film-director">Đạo diễn: {film.director}</p>
           </article>
         ))}
       </div>
@@ -86,7 +86,7 @@ function Checklist({ phase, items }) {
     <div className="check-card">
       <h3>{phase}</h3>
       <p className="check-progress">
-        {done.length} / {items.length} done
+        {done.length} / {items.length} đã xong
       </p>
       <ul className="check-list">
         {items.map((item) => (
@@ -106,23 +106,23 @@ function PlanningSection() {
   return (
     <section id="planning" className="panel accent">
       <div className="section-heading">
-        <p className="eyebrow">Production planning</p>
-        <h2>From script to screening.</h2>
+        <p className="eyebrow">Kế hoạch sản xuất</p>
+        <h2>Từ kịch bản đến buổi chiếu.</h2>
         <p className="section-sub">
-          Shoot schedule, shot list and checklists for the featured film, Midnight Signal.
+          Lịch quay, danh sách cảnh quay và checklist cho phim chính, Midnight Signal.
         </p>
       </div>
 
-      <h3 className="sub-heading">Shoot schedule</h3>
+      <h3 className="sub-heading">Lịch quay</h3>
       <div className="table-wrap">
         <table>
           <thead>
             <tr>
-              <th>Day</th>
-              <th>Scene</th>
-              <th>Location</th>
-              <th>Call time</th>
-              <th>Status</th>
+              <th>Ngày</th>
+              <th>Cảnh</th>
+              <th>Bối cảnh</th>
+              <th>Giờ tập trung</th>
+              <th>Trạng thái</th>
             </tr>
           </thead>
           <tbody>
@@ -141,15 +141,15 @@ function PlanningSection() {
         </table>
       </div>
 
-      <h3 className="sub-heading">Shot list</h3>
+      <h3 className="sub-heading">Danh sách cảnh quay</h3>
       <div className="table-wrap">
         <table>
           <thead>
             <tr>
-              <th>Shot</th>
-              <th>Setup</th>
-              <th>Lens</th>
-              <th>Notes</th>
+              <th>Cảnh quay</th>
+              <th>Cách quay</th>
+              <th>Ống kính</th>
+              <th>Ghi chú</th>
             </tr>
           </thead>
           <tbody>
@@ -167,7 +167,7 @@ function PlanningSection() {
         </table>
       </div>
 
-      <h3 className="sub-heading">Checklists</h3>
+      <h3 className="sub-heading">Checklist</h3>
       <div className="check-grid">
         {checklists.map((c) => (
           <Checklist key={c.phase} phase={c.phase} items={c.items} />
@@ -181,20 +181,20 @@ function FestivalSection() {
   return (
     <section id="festivals" className="panel">
       <div className="section-heading">
-        <p className="eyebrow">Festivals</p>
-        <h2>Submission tracker.</h2>
+        <p className="eyebrow">Liên hoan phim</p>
+        <h2>Theo dõi nộp liên hoan.</h2>
         <p className="section-sub">
-          Where each film has been sent, and what came back. Deadlines are in YYYY-MM-DD.
+          Mỗi phim đã gửi đi đâu, và kết quả ra sao. Hạn nộp theo định dạng NNNN-TT-NN.
         </p>
       </div>
       <div className="table-wrap">
         <table>
           <thead>
             <tr>
-              <th>Film</th>
-              <th>Festival</th>
-              <th>Deadline</th>
-              <th>Status</th>
+              <th>Phim</th>
+              <th>Liên hoan</th>
+              <th>Hạn nộp</th>
+              <th>Trạng thái</th>
             </tr>
           </thead>
           <tbody>
@@ -209,11 +209,11 @@ function FestivalSection() {
                   <StatusBadge
                     status={f.status}
                     tone={
-                      f.status === 'Selected'
+                      f.status === 'Được chọn'
                         ? 'green'
-                        : f.status === 'In review'
+                        : f.status === 'Đang xét duyệt'
                           ? 'blue'
-                          : f.status === 'Submitted'
+                          : f.status === 'Đã nộp'
                             ? 'amber'
                             : 'grey'
                     }
@@ -237,16 +237,16 @@ function ContactSection() {
   const submit = (e) => {
     e.preventDefault()
     if (!form.name.trim() || !form.message.trim()) {
-      setError('Please add your name and a message.')
+      setError('Vui lòng nhập tên và tin nhắn của bạn.')
       return
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
-      setError('Please enter a valid email address.')
+      setError('Vui lòng nhập địa chỉ email hợp lệ.')
       return
     }
     setError('')
     setSent(true)
-    const subject = encodeURIComponent(`Short Film Studio — message from ${form.name.trim()}`)
+    const subject = encodeURIComponent(`Short Film Studio — tin nhắn từ ${form.name.trim()}`)
     const body = encodeURIComponent(`${form.message.trim()}\n\n— ${form.name.trim()} (${form.email.trim()})`)
     window.location.href = `mailto:${studio.email}?subject=${subject}&body=${body}`
   }
@@ -254,10 +254,10 @@ function ContactSection() {
   return (
     <section id="contact" className="panel accent">
       <div className="section-heading">
-        <p className="eyebrow">Contact</p>
-        <h2>Work with us.</h2>
+        <p className="eyebrow">Liên hệ</p>
+        <h2>Hợp tác cùng chúng tôi.</h2>
         <p className="section-sub">
-          Screenings, collaborations, festival invitations — or just say hello. Based in{' '}
+          Buổi chiếu, hợp tác, lời mời liên hoan — hoặc chỉ cần chào nhau. Chúng tôi ở{' '}
           {studio.location}.
         </p>
       </div>
@@ -269,7 +269,7 @@ function ContactSection() {
             <a href={`mailto:${studio.email}`}>{studio.email}</a>
           </p>
           <p>
-            <strong>Location</strong>
+            <strong>Địa điểm</strong>
             <br />
             {studio.location}
           </p>
@@ -285,25 +285,25 @@ function ContactSection() {
         </div>
         <form className="contact-form" onSubmit={submit} noValidate>
           <label>
-            Your name
-            <input value={form.name} onChange={update('name')} placeholder="Your name" />
+            Tên của bạn
+            <input value={form.name} onChange={update('name')} placeholder="Tên của bạn" />
           </label>
           <label>
             Email
-            <input value={form.email} onChange={update('email')} placeholder="you@example.com" type="email" />
+            <input value={form.email} onChange={update('email')} placeholder="ban@example.com" type="email" />
           </label>
           <label>
-            Message
-            <textarea value={form.message} onChange={update('message')} rows={5} placeholder="Tell us about your project or screening…" />
+            Tin nhắn
+            <textarea value={form.message} onChange={update('message')} rows={5} placeholder="Kể cho chúng tôi về dự án hoặc buổi chiếu của bạn…" />
           </label>
           {error && <p className="form-error">{error}</p>}
           {sent && (
             <p className="form-ok">
-              Thanks — your email app should open with the message ready to send.
+              Cảm ơn bạn — ứng dụng email của bạn sẽ mở ra với tin nhắn đã soạn sẵn.
             </p>
           )}
           <button type="submit" className="button primary">
-            Send message
+            Gửi tin nhắn
           </button>
         </form>
       </div>
@@ -317,57 +317,57 @@ function App() {
       <header className="topbar">
         <div className="brand">MIDNIGHT SIGNAL</div>
         <nav>
-          <a href="#story">Story</a>
-          <a href="#films">Films</a>
-          <a href="#boards">Boards</a>
-          <a href="#planning">Planning</a>
-          <a href="#festivals">Festivals</a>
-          <a href="#contact">Contact</a>
+          <a href="#story">Câu chuyện</a>
+          <a href="#films">Phim</a>
+          <a href="#boards">Storyboard</a>
+          <a href="#planning">Kế hoạch</a>
+          <a href="#festivals">Liên hoan</a>
+          <a href="#contact">Liên hệ</a>
         </nav>
       </header>
 
       <main>
         <section className="hero">
           <div className="hero-copy">
-            <p className="eyebrow">SHORT FILM // 12 MINUTES</p>
+            <p className="eyebrow">PHIM NGẮN // 12 PHÚT</p>
             <h1>{studio.tagline}</h1>
             <p className="lede">
-              Midnight Signal follows a night-shift archivist who discovers a radio transmission from
-              the future — and must decide whether to protect the truth or let it disappear forever.
+              Midnight Signal kể về một nhân viên lưu trữ ca đêm phát hiện một bản tin radio đến từ
+              tương lai — và phải quyết định bảo vệ sự thật hay để nó biến mất mãi mãi.
             </p>
             <div className="cta-group">
               <a href="#films" className="button primary">
-                Browse films
+                Xem các phim
               </a>
               <a href="#planning" className="button secondary">
-                See production plan
+                Xem kế hoạch sản xuất
               </a>
             </div>
           </div>
           <div className="hero-card">
-            <div className="card-tag">Festival-ready</div>
+            <div className="card-tag">Sẵn sàng đi liên hoan</div>
             <div className="poster-grid">
               <span>00:42</span>
-              <span>Drama / Mystery</span>
-              <span>City noir</span>
+              <span>Chính kịch / Bí ẩn</span>
+              <span>Noir đô thị</span>
             </div>
           </div>
         </section>
 
         <section id="story" className="panel">
           <div className="section-heading">
-            <p className="eyebrow">Synopsis</p>
-            <h2>When silence becomes a warning.</h2>
+            <p className="eyebrow">Tóm tắt nội dung</p>
+            <h2>Khi sự im lặng trở thành lời cảnh báo.</h2>
           </div>
           <div className="story-grid">
             <p>
-              After a sudden blackout, archivist Nhi hears an impossible voice on a damaged radio.
-              The message contains details of a tragedy no one claims to remember — and only she can
-              stop it from repeating.
+              Sau một lần mất điện đột ngột, nhân viên lưu trữ Nhi nghe thấy một giọng nói không thể
+              nào có thật trên chiếc radio đã hỏng. Thông điệp chứa chi tiết về một bi kịch mà không
+              ai nhận là mình nhớ — và chỉ cô mới có thể ngăn nó lặp lại.
             </p>
             <p>
-              As the city slips deeper into the night, each clue leads to a forgotten memory, a ruptured
-              relationship, and a final choice between truth and survival.
+              Khi thành phố chìm sâu hơn vào màn đêm, mỗi manh mối dẫn tới một ký ức bị lãng quên,
+              một mối quan hệ rạn nứt, và một lựa chọn cuối cùng giữa sự thật và sự sống còn.
             </p>
           </div>
         </section>
@@ -377,7 +377,7 @@ function App() {
         <section id="boards" className="panel accent">
           <div className="section-heading">
             <p className="eyebrow">Storyboard</p>
-            <h2>Three cinematic beats.</h2>
+            <h2>Ba khoảnh khắc điện ảnh.</h2>
           </div>
           <div className="beat-grid">
             {storyBeats.map((beat) => (
@@ -393,8 +393,8 @@ function App() {
 
         <section id="timeline" className="panel timeline-panel">
           <div className="section-heading">
-            <p className="eyebrow">Production timeline</p>
-            <h2>From script to screening.</h2>
+            <p className="eyebrow">Tiến độ sản xuất</p>
+            <h2>Từ kịch bản đến buổi chiếu.</h2>
           </div>
           <ul className="timeline-list">
             {timeline.map((item) => (
